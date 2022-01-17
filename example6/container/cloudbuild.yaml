@@ -1,0 +1,17 @@
+steps:
+- name: 'gcr.io/cloud-builders/docker'
+  args: [ 'build', '-t', '$_IMAGE_URI',
+          '--build-arg=PYTHON_VERSION=$_PYTHON_VERSION',
+          '--build-arg=BEAM_VERSION=$_BEAM_VERSION',
+          '--build-arg=LXML_VERSION=$_LXML_VERSION',
+          '.' ]
+substitutions:
+  _PYTHON_VERSION: '3.7'
+  _BEAM_VERSION: '2.35.0'
+  _LXML_VERSION: '4.7.1'
+  _IMAGE_URI: 'gcr.io/${PROJECT_ID}/custom_beam_python${_PYTHON_VERSION}:2.35.0'
+images:
+- '$_IMAGE_URI'
+options:
+  dynamic_substitutions: true
+

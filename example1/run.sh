@@ -1,0 +1,28 @@
+#!/bin/bash
+
+# Move to workdir
+WORK_DIR="$(cd "$(dirname $0)"; pwd)"
+cd "$WORK_DIR"
+
+# Create venv
+echo "## Create venv."
+python -m venv env
+source env/bin/activate
+
+# Install apache-beam
+echo "## Install apache-beam[gcp] and dependency packages."
+pip install --upgrade pip
+pip install apache-beam[gcp]==2.35.0 google-cloud-translate==3.6.1
+
+# Run pipeline
+echo "## Run pipeline with '--requirements_file'."
+PROJECT=$(gcloud config get-value project)
+REGION=us-central1
+
+python -m translate --runner=DataflowRunner \
+  --project=$PROJECT \
+  --region=$REGION \
+  --job_name=example1 \
+  --experiments=use_runner_v2 \
+  --experiments=no_use_multiple_sdk_containers \
+  --requirements_file=requirements.txt

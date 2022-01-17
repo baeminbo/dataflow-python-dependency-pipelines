@@ -1,0 +1,1 @@
+google-cloud-translate==3.6.1

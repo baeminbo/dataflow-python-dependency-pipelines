@@ -1,0 +1,10 @@
+# Intellij
+.idea
+*.iml
+
+# Python virtual environment and build
+env/
+downloads/
+__pycache__
+*.pyc
+*.egg-info
